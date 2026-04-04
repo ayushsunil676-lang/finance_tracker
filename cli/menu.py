@@ -7,3 +7,11 @@ def show_main_menu():
     print("5. Exit")
     choice = input("Enter your choice:")
     return choice
+
+def get_transaction_input():
+    type = input("Type (income/expense)")
+    category = input("Category (Food/Rent/Transport/Other)")
+    amount = input("Amount:")
+    description = input("Description:")
+    return type, category, amount, description
+    
