@@ -1,4 +1,7 @@
 from cli.menu import show_main_menu
+from db.database import initialize_db 
+
+initialize_db()
 
 while True:
     choice = show_main_menu()
