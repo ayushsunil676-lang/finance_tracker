@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import date
 
 def get_connection():
     connection = sqlite3.connect("finance.db")
@@ -21,7 +22,6 @@ def initialize_db():
     connection.close()
 
 def add_transaction(type, category, amount, description):
-    from datetime import date
     connection = get_connection()
     cursor = connection.cursor()
     cursor.execute("""
@@ -30,3 +30,11 @@ def add_transaction(type, category, amount, description):
     """,            (type, category, float(amount), description, str(date.today())))
     connection.commit()
     connection.close()
+
+def get_all_transactions():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM transactions")
+    results = cursor.fetchall()
+    connection.close()
+    return results

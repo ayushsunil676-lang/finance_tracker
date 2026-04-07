@@ -2,6 +2,7 @@ from cli.menu import show_main_menu
 from db.database import initialize_db 
 from cli.menu import get_transaction_input
 from db.database import add_transaction
+from db.database import get_all_transactions
 
 initialize_db()
 
@@ -12,7 +13,9 @@ while True:
         add_transaction(type, category, amount, description)
         print("✅ Transaction saved!")
     elif choice == "2":
-        print("TODO: View Transactions")
+        transactions = get_all_transactions()
+        for transaction in transactions:
+            print(f"[{transaction[0]}] {transaction[5]} | {transaction[1]} | {transaction[2]} | €{transaction[3]} | {transaction[4]}")
     elif choice == "3":
         print("TODO: Monthly Summary")
     elif choice == "4":
