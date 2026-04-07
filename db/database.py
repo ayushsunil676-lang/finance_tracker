@@ -38,3 +38,20 @@ def get_all_transactions():
     results = cursor.fetchall()
     connection.close()
     return results
+
+def get_monthly_summary():
+    connection = get_connection()
+    cursor = connection.cursor()
+    current_month = date.today().strftime("%Y-%m")
+    cursor.execute("SELECT * FROM transactions WHERE date LIKE ?", (current_month + "%",))
+    transactions = cursor.fetchall()
+    connection.close()
+
+    income_total = 0
+    expense_total = 0
+    for transaction in transactions:
+        if transaction[1] == "income":
+            income_total += transaction[3]
+        elif transaction[1] == "expense":
+            expense_total += transaction[3]
+    return income_total, expense_total

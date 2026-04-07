@@ -3,6 +3,7 @@ from db.database import initialize_db
 from cli.menu import get_transaction_input
 from db.database import add_transaction
 from db.database import get_all_transactions
+from db.database import get_monthly_summary
 
 initialize_db()
 
@@ -17,7 +18,12 @@ while True:
         for transaction in transactions:
             print(f"[{transaction[0]}] {transaction[5]} | {transaction[1]} | {transaction[2]} | €{transaction[3]} | {transaction[4]}")
     elif choice == "3":
-        print("TODO: Monthly Summary")
+        income, expenses = get_monthly_summary()
+        balance = income - expenses
+        print(f"--- Monthly Summary ---")
+        print(f"Total Income:   €{income}")
+        print(f"Total Expenses: €{expenses}")
+        print(f"Balance:        €{balance}")
     elif choice == "4":
         print("TODO: Manage Budgets")
     elif choice == "5":
