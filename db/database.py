@@ -18,6 +18,13 @@ def initialize_db():
                    date TEXT NOT NULL
                    )
     """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS budgets (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category TEXT NOT NULL,
+            amount REAL NOT NULL
+        )
+    """)
     connection.commit()
     connection.close()
 
@@ -55,3 +62,18 @@ def get_monthly_summary():
         elif transaction[1] == "expense":
             expense_total += transaction[3]
     return income_total, expense_total
+
+def set_budget(category, amount):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("INSERT INTO budgets (category, amount) VALUES (?, ?)", (category, float(amount)))
+    connection.commit()
+    connection.close()
+
+def get_budget():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM budgets")
+    results = cursor.fetchall()
+    connection.close()
+    return results
