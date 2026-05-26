@@ -77,3 +77,18 @@ def get_budget():
     results = cursor.fetchall()
     connection.close()
     return results
+
+def get_category_spending(category):
+    connection = get_connection()
+    cursor = connection.cursor()
+    current_month = date.today().strftime("%Y-%m")
+    cursor.execute("""
+        SELECT * FROM transactions 
+        WHERE date LIKE ? AND category = ? AND type = 'expense'
+    """, (current_month + "%", category))
+    transactions = cursor.fetchall()
+    connection.close()
+    total = 0
+    for transaction in transactions:
+        total += transaction[3]
+    return total

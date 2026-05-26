@@ -1,11 +1,5 @@
-from cli.menu import show_main_menu
-from db.database import initialize_db 
-from cli.menu import get_transaction_input
-from db.database import add_transaction
-from db.database import get_all_transactions
-from db.database import get_monthly_summary
-from db.database import set_budget
-from db.database import get_budget
+from cli.menu import show_main_menu, get_transaction_input
+from db.database import initialize_db, add_transaction, get_all_transactions, get_monthly_summary, set_budget, get_budget, get_category_spending
 
 initialize_db()
 
@@ -30,15 +24,21 @@ while True:
         print("1. Set Budget")
         print("2. View Budgets")
         budget_choice = input("Enter choice: ")
-    if budget_choice == "1":
+        if budget_choice == "1":
             category = input("Category: ")
             amount = input("Budget amount: ")
             set_budget(category, amount)
             print(f"✅ Budget set for {category}: €{amount}")
-    elif budget_choice == "2":
+        elif budget_choice == "2":        
             budgets = get_budget()
             for budget in budgets:
-                print(f"{budget[1]}: €{budget[2]}")
+                category = budget[1]
+                budget_amount = budget[2]
+                spent = get_category_spending(category)
+                if spent > budget_amount:
+                    print(f"⚠️  {category}: €{spent} / €{budget_amount} --- BUDGET EXCEEDED!")
+                else:
+                    print(f"✅ {category}: €{spent} / €{budget_amount}")
     elif choice == "5":
         print("Goodbye!")
         break

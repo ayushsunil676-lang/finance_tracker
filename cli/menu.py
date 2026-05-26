@@ -9,9 +9,11 @@ def show_main_menu():
     return choice
 
 def get_transaction_input():
-    type = input("Type (income/expense)")
-    category = input("Category (Food/Rent/Transport/Other)")
-    amount = input("Amount:")
-    description = input("Description:")
+    type = input("Type (income/expense): ")
+    if type == "income":
+        category = input("Source (Salary/Freelance/Gift/Tips/Other): ")
+    else:
+        category = input("Category (Food/Rent/Transport/Groceries/Misc.): ")
+    amount = input("Amount: ")
+    description = input("Description: ")
     return type, category, amount, description
-    
