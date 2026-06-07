@@ -5,6 +5,7 @@ def show_main_menu():
     print("3. Monthly Summary")
     print("4. Manage Budgets")
     print("5. Exit")
+    print("6. Delete Transaction")
     choice = input("Enter your choice:")
     return choice
 

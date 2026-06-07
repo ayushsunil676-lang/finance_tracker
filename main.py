@@ -1,5 +1,5 @@
 from cli.menu import show_main_menu, get_transaction_input
-from db.database import initialize_db, add_transaction, get_all_transactions, get_monthly_summary, set_budget, get_budget, get_category_spending
+from db.database import initialize_db, add_transaction, get_all_transactions, get_monthly_summary, set_budget, get_budget, get_category_spending, delete_transaction
 
 initialize_db()
 
@@ -41,4 +41,11 @@ while True:
                     print(f"✅ {category}: €{spent} / €{budget_amount}")
     elif choice == "5":
         print("Goodbye!")
+    elif choice == "6":
+        transactions = get_all_transactions()
+        for transaction in transactions:
+            print(f"[{transaction[0]}] {transaction[5]} | {transaction [1]} | {transaction [2]} | €{transaction [3]} | {transaction[4]}")
+        id = input("Enter ID to delete: ")
+        delete_transaction(id)
+        print("✅ Transaction deleted!")
         break

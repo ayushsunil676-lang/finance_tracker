@@ -92,3 +92,10 @@ def get_category_spending(category):
     for transaction in transactions:
         total += transaction[3]
     return total
+
+def delete_transaction(id):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("DELETE FROM transactions WHERE id = ?", (id,))
+    connection.commit()
+    connection.close()
